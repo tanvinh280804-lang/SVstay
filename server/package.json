@@ -90,7 +90,7 @@
     "minimatch": "^10.2.6",
     "mongodb": "^7.7.0",
     "mongodb-connection-string-url": "^7.0.2",
-    "mongoose": "^9.11.4",
+    "mongoose": "^9.12.0",
     "mpath": "^0.9.0",
     "mquery": "^6.0.1",
     "ms": "^2.1.3",

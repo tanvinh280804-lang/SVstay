@@ -1,4 +1,4 @@
-import RoomType from "../models/RoomType";
+import RoomType from "../models/RoomType.js";
 
 export const getAllRoomTypesService = async () => {
     try {
@@ -9,7 +9,7 @@ export const getAllRoomTypesService = async () => {
         return { roomType };
     }
     catch (error) {
-        console.log(error);
-        return { error: "Lỗi hệ thống" };
+        console.log(`Error in getAllRoomTypesService: ${error.message}`);
+        return { error: "Lỗi hệ thống khi lấy danh sách loại phòng." };
     }
 }
