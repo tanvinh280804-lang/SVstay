@@ -2,11 +2,15 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import connectDB from "../config/database.config.js";
 import AdminSeeder from "./Admin.seeder.js";
+import OwnerSeeder from "./Owner.seeder.js";
+import RoomTypeSeeder from "./RoomType.seeder.js";
 
 const seedDatabase = async () => {
     try {
         await connectDB();
         await AdminSeeder();
+        await OwnerSeeder();
+        await RoomTypeSeeder();
         console.log("Database seeded successfully");
     } catch (error) {
         console.error("Error seeding database:", error);

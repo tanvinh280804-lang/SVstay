@@ -1,4 +1,5 @@
 import Admin from "../models/Admin.js";
+import Owner from "../models/Owner.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { ADMIN_ISACTIVE } from "../constants/Admin.constant.js";
@@ -30,6 +31,35 @@ export const adminLoginService = async (username, password) => {
     }
     catch (error) {
         console.error("Error during admin login:", error);
-        throw new Error("Lỗi hệ thống");
+        return { error: "Lỗi hệ thống" };
+    }
+}
+
+export const ownerLoginService = async (email, password) => {
+    try {
+        let owner = await Owner.findOne({ email });
+        if (!owner) {
+            return { error: "Tài khoản Chủ Trọ không tồn tại." };
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, owner.password);
+        if (!isPasswordValid) {
+            return { error: "Mật khẩu không chính xác." };
+        }
+
+        const token = jwt.sign(
+            { id: owner._id, email: owner.email },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN }
+        );
+
+        owner = owner.toObject();
+        delete owner.password;
+
+        return { owner, token };
+    }
+    catch (error) {
+        console.error("Error during owner login:", error);
+        return { error: "Lỗi hệ thống" };
     }
 }

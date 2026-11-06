@@ -1,4 +1,3 @@
-import * as AuthService from "../services/Auth.service.js";
 import * as AdminService from "../services/Admin.service.js";
 
 export const getProfile = async (req, res) => {
