@@ -1,31 +1,40 @@
+import {
+  Users,
+  Package,
+  ClipboardList,
+  DollarSign,
+  Calendar,
+  TrendingUp,
+} from "lucide-react";
+
 const statistics = [
   {
     title: "Tổng người dùng",
     value: "1,250",
     change: "+12.5%",
-    icon: "👥",
-    color: "from-blue-500 to-indigo-600",
+    icon: Users,
+    color: "text-blue-600 bg-blue-50",
   },
   {
     title: "Tổng sản phẩm",
     value: "350",
     change: "+8.2%",
-    icon: "📦",
-    color: "from-emerald-500 to-teal-600",
+    icon: Package,
+    color: "text-emerald-600 bg-emerald-50",
   },
   {
     title: "Tổng đơn hàng",
     value: "568",
     change: "+15.3%",
-    icon: "📋",
-    color: "from-amber-500 to-orange-600",
+    icon: ClipboardList,
+    color: "text-amber-600 bg-amber-50",
   },
   {
     title: "Doanh thu",
     value: "125.500.000đ",
     change: "+10.8%",
-    icon: "💰",
-    color: "from-rose-500 to-pink-600",
+    icon: DollarSign,
+    color: "text-rose-600 bg-rose-50",
   },
 ];
 
@@ -75,39 +84,43 @@ const Dashboard = () => {
         </div>
 
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium bg-white text-slate-600 border border-slate-200 shadow-2xs self-start sm:self-auto">
-          <span>📅</span>
+          <Calendar className="w-4 h-4 text-slate-500" />
           <span>02/11/2026</span>
         </div>
       </div>
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-        {statistics.map((item) => (
-          <div
-            key={item.title}
-            className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-slate-500">{item.title}</span>
-              <span className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-lg">
-                {item.icon}
-              </span>
-            </div>
-
-            <div className="mt-4">
-              <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
-                {item.value}
-              </h2>
-
-              <p className="mt-2 text-xs text-slate-500 flex items-center gap-1.5 flex-wrap">
-                <span className="inline-flex items-center font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded text-xs">
-                  ↑ {item.change}
+        {statistics.map((item) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={item.title}
+              className="bg-white rounded-xl p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-slate-500">{item.title}</span>
+                <span className={`w-10 h-10 rounded-lg flex items-center justify-center ${item.color}`}>
+                  <Icon className="w-5 h-5" />
                 </span>
-                <span>so với tháng trước</span>
-              </p>
+              </div>
+
+              <div className="mt-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
+                  {item.value}
+                </h2>
+
+                <p className="mt-2 text-xs text-slate-500 flex items-center gap-1.5 flex-wrap">
+                  <span className="inline-flex items-center gap-1 font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded text-xs">
+                    <TrendingUp className="w-3.5 h-3.5" />
+                    <span>{item.change}</span>
+                  </span>
+                  <span>so với tháng trước</span>
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Recent Orders Section */}

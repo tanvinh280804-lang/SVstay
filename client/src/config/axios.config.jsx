@@ -1,9 +1,9 @@
 import axios from "axios";
 
 // Đọc các URL từ biến môi trường Vite (.env)
-const ADMIN_BASE_URL = import.meta.env.VITE_ADMIN_API || "http://localhost:5000/api/admin";
-const OWNER_BASE_URL = import.meta.env.VITE_OWNER_API || "http://localhost:5000/api/owner";
-const CUSTOMER_BASE_URL = import.meta.env.VITE_CUSTOMER_API || "http://localhost:5000/api/customer";
+const ADMIN_BASE_URL = import.meta.env.VITE_ADMIN_API || "http://localhost:8000/api/admin";
+const OWNER_BASE_URL = import.meta.env.VITE_OWNER_API || "http://localhost:8000/api/owner";
+const CUSTOMER_BASE_URL = import.meta.env.VITE_CUSTOMER_API || "http://localhost:8000/api/customer";
 const PUBLIC_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 /**

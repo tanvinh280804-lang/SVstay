@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
+import { LayoutDashboard, Users, Package, Settings, ShieldCheck } from "lucide-react";
 
 const menuItems = [
-  { title: "Dashboard", icon: "▦", path: "/admin", end: true },
-  { title: "Người dùng", icon: "♙", path: "/admin/users" },
-  { title: "Sản phẩm", icon: "▣", path: "/admin/products" },
-  { title: "Đơn hàng", icon: "▤", path: "/admin/orders" },
-  { title: "Cài đặt", icon: "⚙", path: "/admin/settings" },
+  { title: "Dashboard", icon: LayoutDashboard, path: "/admin", end: true },
+  { title: "Người dùng", icon: Users, path: "/admin/users" },
+  { title: "Loại phòng", icon: Package, path: "/admin/room-types" },
+  { title: "Phòng trọ", icon: Package, path: "/admin/rooms" },
+  { title: "Cài đặt", icon: Settings, path: "/admin/settings" },
 ];
 
 const Sidebar = ({ collapsed }) => {
@@ -17,8 +18,8 @@ const Sidebar = ({ collapsed }) => {
     >
       {/* Brand Logo */}
       <div className={`h-16 flex items-center px-4 border-b border-slate-800 gap-3 ${collapsed ? "justify-center" : ""}`}>
-        <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white font-bold text-xl flex items-center justify-center shrink-0 shadow-md shadow-indigo-600/30">
-          A
+        <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-indigo-600/30">
+          <ShieldCheck className="w-6 h-6" />
         </div>
 
         {!collapsed && (
@@ -34,31 +35,34 @@ const Sidebar = ({ collapsed }) => {
           {!collapsed && "MENU"}
         </p>
 
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            end={item.end}
-            title={collapsed ? item.title : ""}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
-                isActive
-                  ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/40"
-                  : "text-slate-400 hover:text-white hover:bg-slate-800"
-              } ${collapsed ? "justify-center" : ""}`
-            }
-          >
-            <span className="text-lg shrink-0 flex items-center justify-center w-6 text-center">
-              {item.icon}
-            </span>
-
-            {!collapsed && (
-              <span className="truncate">
-                {item.title}
+        {menuItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.end}
+              title={collapsed ? item.title : ""}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+                  isActive
+                    ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/40"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800"
+                } ${collapsed ? "justify-center" : ""}`
+              }
+            >
+              <span className="shrink-0 flex items-center justify-center w-6">
+                <Icon className="w-5 h-5" />
               </span>
-            )}
-          </NavLink>
-        ))}
+
+              {!collapsed && (
+                <span className="truncate">
+                  {item.title}
+                </span>
+              )}
+            </NavLink>
+          );
+        })}
       </div>
 
       {/* Footer Info */}

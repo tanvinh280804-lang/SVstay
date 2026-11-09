@@ -11,21 +11,16 @@ export const adminLogin = async (payload) => {
     try {
         console.log("Admin login payload:", payload);
 
-        // 1. Gọi API POST /login (endpoint đầy đủ là http://localhost:5000/api/admin/login)
         const response = await adminApi.post("/login", payload);
         
-
-        // 2. Lưu token vào localStorage (admin_token) để các request sau tự động gắn Bearer Token
         if (response?.token) {
             localStorage.setItem(TOKEN_KEYS.ADMIN, response.token);
         }
 
-        // 3. Lưu thông tin admin để hiển thị trên UI/Header nếu cần
         if (response?.admin) {
             localStorage.setItem(ADMIN_INFO_KEY, JSON.stringify(response.admin));
         }
 
-        // 4. Bắt buộc return response để component nhận được dữ liệu
         return response;
     } catch (error) {
         console.error("Admin login error:", error);
@@ -33,17 +28,12 @@ export const adminLogin = async (payload) => {
     }
 };
 
-/**
- * Đăng xuất tài khoản Admin: xóa token và thông tin admin khỏi localStorage
- */
 export const adminLogout = () => {
     localStorage.removeItem(TOKEN_KEYS.ADMIN);
     localStorage.removeItem(ADMIN_INFO_KEY);
 };
 
-/**
- * Lấy thông tin Admin hiện tại từ localStorage
- */
+
 export const getCurrentAdmin = () => {
     try {
         const info = localStorage.getItem(ADMIN_INFO_KEY);
@@ -59,3 +49,4 @@ export const getCurrentAdmin = () => {
 export const isAdminAuthenticated = () => {
     return !!localStorage.getItem(TOKEN_KEYS.ADMIN);
 };
+
