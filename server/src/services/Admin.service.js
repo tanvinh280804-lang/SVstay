@@ -6,11 +6,11 @@ export const getProfileService = async (adminId) => {
         if (!admin) {
             return { error: "Tài khoản Admin không tồn tại." };
         }
-        
+
         return { admin };
     }
     catch (error) {
         console.error("Error fetching admin profile:", error);
-        throw new Error("Lỗi hệ thống");
+        return { error: "Lỗi hệ thống" };
     }
 }

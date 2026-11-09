@@ -14,4 +14,8 @@ adminRouter.get("/profile/:adminId", AdminMiddleware.AdminAuthorize, AdminContro
 
 // RoomType Management routes
 adminRouter.get("/room-types", AdminMiddleware.AdminAuthorize, RoomTypeController.getAllRoomTypes);
+adminRouter.post("/room-types", AdminMiddleware.AdminAuthorize, RoomTypeController.addNewRoomType);
+adminRouter.delete("/room-types/:roomTypeId", AdminMiddleware.AdminAuthorize, RoomTypeController.removeRoomType);
+adminRouter.patch("/room-types/:roomTypeId", AdminMiddleware.AdminAuthorize, RoomTypeController.updateRoomType);
+
 export default adminRouter;
