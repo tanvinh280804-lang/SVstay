@@ -1,8 +1,10 @@
 const Footer = () => {
   return (
-    <footer className="py-4 px-4 md:px-6 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+    <footer className="min-h-[52px] py-3 px-5 md:px-7 bg-white border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400">
       <span>© 2026 Admin Panel. All rights reserved.</span>
-      <span>Designed for Management</span>
+      <span className="font-medium text-slate-500">
+        Designed for Management
+      </span>
     </footer>
   );
 };

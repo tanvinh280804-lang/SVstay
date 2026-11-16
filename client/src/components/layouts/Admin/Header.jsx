@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, Bell, LogIn, LogOut, User, Shield, ChevronDown } from "lucide-react";
@@ -75,145 +76,174 @@ const Header = ({ toggleSidebar }) => {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 px-4 md:px-6 flex items-center justify-between sticky top-0 z-20 shadow-xs">
+    <header className="h-16 bg-white border-b border-slate-200/80 px-4 md:px-7 flex items-center justify-between sticky top-0 z-20 shadow-[0_2px_10px_rgba(15,23,42,0.03)]">
+
       {/* Nút toggle Sidebar & Breadcrumb */}
-      <div className="flex items-center gap-3 md:gap-4">
+      <div className="flex items-center gap-3 md:gap-5 min-w-0">
+
         <button
-          className="w-10 h-10 flex items-center justify-center rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
+          className="w-9 h-9 flex items-center justify-center rounded-lg text-slate-500 hover:text-teal-700 hover:bg-teal-50 transition-all duration-200 cursor-pointer"
           onClick={toggleSidebar}
           aria-label="Toggle sidebar"
         >
           <Menu className="w-5 h-5" />
         </button>
 
-        <div className="flex items-center gap-2 text-sm text-slate-500">
-          <span>Admin</span>
+        <div className="flex items-center gap-2 text-[13px] min-w-0">
+          <span className="text-slate-400 font-medium">
+            Admin
+          </span>
+
           <span className="text-slate-300">/</span>
-          <strong className="font-semibold text-slate-800">
+
+          <strong className="font-semibold text-slate-700 truncate">
             {location.pathname.includes("/admin/profile")
               ? "Hồ sơ"
               : location.pathname.includes("/admin/room-types")
-              ? "Loại phòng"
-              : location.pathname.includes("/admin/rooms")
-              ? "Phòng trọ"
-              : location.pathname.includes("/admin/users")
-              ? "Người dùng"
-              : location.pathname.includes("/admin/settings")
-              ? "Cài đặt"
-              : "Dashboard"}
+                ? "Loại phòng"
+                : location.pathname.includes("/admin/rooms")
+                  ? "Phòng trọ"
+                  : location.pathname.includes("/admin/users")
+                    ? "Người dùng"
+                    : location.pathname.includes("/admin/settings")
+                      ? "Cài đặt"
+                      : "Dashboard"}
           </strong>
         </div>
       </div>
 
       {/* Khu vực thông tin bên phải */}
-      <div className="flex items-center gap-3 md:gap-4">
+      <div className="flex items-center gap-3 md:gap-5 shrink-0">
+
         {/* Nút thông báo */}
         {isAuthenticated && (
           <button
-            className="relative w-10 h-10 flex items-center justify-center rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="relative w-9 h-9 flex items-center justify-center rounded-lg text-slate-500 hover:text-teal-700 hover:bg-teal-50 transition-all duration-200 cursor-pointer"
             aria-label="Thông báo"
           >
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
+            <Bell className="w-[19px] h-[19px]" />
+
+            <span className="absolute top-[8px] right-[8px] w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
           </button>
         )}
 
         {/* Khối tài khoản: ĐÃ ĐĂNG NHẬP vs CHƯA ĐĂNG NHẬP */}
         {isAuthenticated ? (
           <div className="relative" ref={dropdownRef}>
+
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-3 pl-2 md:pl-3 border-l border-slate-200 hover:opacity-85 transition-opacity cursor-pointer text-left"
+              className="flex items-center gap-3 pl-3 border-l border-slate-200 hover:opacity-80 transition-opacity cursor-pointer text-left"
               aria-label="Admin Profile Menu"
             >
-              {/* Avatar: hiển thị avatar_url nếu có, fallback initials */}
+
+              {/* Avatar */}
               {adminInfo?.avatar_url && !imageError ? (
                 <img
                   src={adminInfo.avatar_url}
                   alt={adminInfo.username || "Admin"}
                   onError={() => setImageError(true)}
-                  className="w-9 h-9 rounded-full object-cover border border-indigo-200 shrink-0"
+                  className="w-9 h-9 rounded-full object-cover border-2 border-teal-100 shrink-0"
                 />
               ) : (
-                <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center border border-indigo-200 shrink-0">
+                <div className="w-9 h-9 rounded-full bg-teal-50 text-teal-700 font-bold text-sm flex items-center justify-center border border-teal-100 shrink-0">
                   {getInitials(adminInfo?.username)}
                 </div>
               )}
 
               {/* Tên và Vai trò */}
-              <div className="hidden sm:flex flex-col text-left">
-                <strong className="text-sm font-semibold text-slate-800 leading-tight">
+              <div className="hidden sm:flex flex-col text-left gap-0.5">
+
+                <strong className="text-[13px] font-semibold text-slate-700 leading-tight">
                   {adminInfo?.username || "Administrator"}
                 </strong>
-                <span className="text-xs text-indigo-600 font-medium leading-tight">
+
+                <span className="text-[11px] text-teal-700 font-medium leading-tight">
                   {getRoleLabel(adminInfo?.role)}
                 </span>
+
               </div>
 
               <ChevronDown
                 className={`w-4 h-4 text-slate-400 transition-transform duration-200 hidden sm:block ${dropdownOpen ? "rotate-180" : ""
                   }`}
               />
+
             </button>
 
             {/* Dropdown Menu */}
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in duration-150">
+              <div className="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-[0_12px_35px_rgba(15,23,42,0.12)] border border-slate-200/80 py-2 z-50 animate-in fade-in duration-150">
+
                 {/* Thông tin chi tiết */}
                 <div className="px-4 py-3 border-b border-slate-100">
-                  <p className="text-xs text-slate-400 font-medium">Tài khoản đang đăng nhập</p>
-                  <p className="text-sm font-bold text-slate-800 truncate mt-0.5">
+
+                  <p className="text-[11px] text-slate-400 font-medium">
+                    Tài khoản đang đăng nhập
+                  </p>
+
+                  <p className="text-sm font-bold text-slate-800 truncate mt-1">
                     {adminInfo?.username || "Admin"}
                   </p>
+
                   {adminInfo?.email && (
-                    <p className="text-xs text-slate-500 truncate mt-0.5">
+                    <p className="text-xs text-slate-500 truncate mt-1">
                       {adminInfo.email}
                     </p>
                   )}
+
                   {adminInfo?.phone && (
-                    <p className="text-xs text-slate-400 truncate mt-0.5">
+                    <p className="text-xs text-slate-400 truncate mt-1">
                       SĐT: {adminInfo.phone}
                     </p>
                   )}
-                  <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
+
+                  <div className="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-teal-50 text-teal-700 border border-teal-100">
                     <Shield className="w-3.5 h-3.5" />
                     <span>{getRoleLabel(adminInfo?.role)}</span>
                   </div>
+
                 </div>
 
                 {/* Các nút hành động */}
-                <div className="pt-1">
+                <div className="pt-1.5">
+
                   <button
                     onClick={() => {
                       setDropdownOpen(false);
                       navigate("/admin/profile");
                     }}
-                    className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors cursor-pointer font-medium"
+                    className="w-full px-4 py-2.5 text-left text-[13px] text-slate-600 hover:bg-teal-50 hover:text-teal-700 flex items-center gap-3 transition-colors cursor-pointer font-medium"
                   >
-                    <User className="w-4 h-4 text-slate-500" />
+                    <User className="w-4 h-4 text-slate-400" />
                     <span>Hồ sơ cá nhân</span>
                   </button>
+
                   <button
                     onClick={handleLogout}
-                    className="w-full px-4 py-2 text-left text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 transition-colors cursor-pointer font-medium"
+                    className="w-full px-4 py-2.5 text-left text-[13px] text-rose-600 hover:bg-rose-50 flex items-center gap-3 transition-colors cursor-pointer font-medium"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Đăng xuất</span>
                   </button>
+
                 </div>
               </div>
             )}
           </div>
         ) : (
+
           /* Trạng thái CHƯA ĐĂNG NHẬP */
-          <div className="pl-2 md:pl-3 border-l border-slate-200">
+          <div className="pl-3 border-l border-slate-200">
+
             <button
               onClick={() => navigate("/admin/login")}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition shadow-sm shadow-blue-500/25 cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-[13px] font-semibold bg-teal-700 text-white hover:bg-teal-800 transition-all duration-200 shadow-sm shadow-teal-700/15 cursor-pointer"
             >
               <LogIn className="w-4 h-4" />
               <span>Đăng nhập</span>
             </button>
+
           </div>
         )}
       </div>

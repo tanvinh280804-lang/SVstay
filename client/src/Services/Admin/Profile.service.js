@@ -15,6 +15,15 @@ export const getAdminProfile = async (adminId) => {
   }
 };
 
+export const getMyAdminProfile = async () => adminApi.get("/profile/me");
+export const updateMyAdminProfile = async (payload) => {
+  const response = await adminApi.patch("/profile/me", payload);
+  if (response?.admin) localStorage.setItem("admin_info", JSON.stringify(response.admin));
+  return response;
+};
+
 export default {
   getAdminProfile,
+  getMyAdminProfile,
+  updateMyAdminProfile,
 };

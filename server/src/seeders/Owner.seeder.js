@@ -29,14 +29,14 @@ const OwnerSeeder = async () => {
 
         // Create owner (password is automatically hashed by Owner model pre-save hook)
         const owner = new Owner({
-            fullName,
+            full_name: fullName,
             email,
-            phoneNumber,
+            phone_number: phoneNumber,
             password,
-            identityCard,
+            identity_card: identityCard,
             address,
             avatar,
-            isActive: OWNER_ISACTIVE.ACTIVE
+            is_active: OWNER_ISACTIVE.ACTIVE
         });
 
         await owner.save();

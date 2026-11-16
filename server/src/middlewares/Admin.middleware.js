@@ -96,19 +96,19 @@ export const isAdminActive = async (req, res, next) => {
             });
         }
 
-        if (admin.isActive === ADMIN_ISACTIVE.BANNED) {
+        if (admin.is_active === ADMIN_ISACTIVE.BANNED) {
             return res.status(403).json({
                 message: "Tài khoản Admin đã bị khóa vĩnh viễn (Banned)."
             });
         }
 
-        if (admin.isActive === ADMIN_ISACTIVE.INACTIVE) {
+        if (admin.is_active === ADMIN_ISACTIVE.INACTIVE) {
             return res.status(403).json({
                 message: "Tài khoản Admin đang tạm thời bị khóa hoặc chưa kích hoạt."
             });
         }
 
-        if (admin.isActive !== ADMIN_ISACTIVE.ACTIVE) {
+        if (admin.is_active !== ADMIN_ISACTIVE.ACTIVE) {
             return res.status(403).json({
                 message: "Tài khoản Admin đã bị khóa hoặc không hoạt động."
             });

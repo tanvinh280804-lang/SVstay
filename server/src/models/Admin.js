@@ -33,7 +33,7 @@ const adminSchema = new mongoose.Schema({
         enum: [ADMIN_ROLE.ADMIN, ADMIN_ROLE.SUPERADMIN],
         default: ADMIN_ROLE.ADMIN
     },
-    isActive: {
+    is_active: {
         type: Number,
         enum: [ADMIN_ISACTIVE.ACTIVE, ADMIN_ISACTIVE.INACTIVE, ADMIN_ISACTIVE.BANNED],
         default: ADMIN_ISACTIVE.ACTIVE

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import slugify from "slugify";
 
 const roomTypeSchema = new mongoose.Schema({
     type_name: {
@@ -15,15 +16,15 @@ const roomTypeSchema = new mongoose.Schema({
         type: String,
         required: [true, "Mô tả loại phòng là bắt buộc"],
     },
-    isActive: {
+    is_active: {
         type: Boolean,
         default: true,
     }
 }, { timestamps: true });
 
 roomTypeSchema.pre('validate', function () {
-    if (this.type_name && (!this.type_slug || this.isModified('type_name'))) {
-        this.type_slug = this.type_name.toLowerCase().replace(/\s+/g, '-');
+    if (this.type_name && !this.type_slug) {
+        this.type_slug = slugify(this.type_name, { lower: true, strict: true, locale: 'vi' });
     }
 });
 

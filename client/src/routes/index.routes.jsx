@@ -1,20 +1,23 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import AdminRoutes from "./Admin.routes";
-// import CustomerRoutes from "./Customer.routes";
-// import OwnerRoutes from "./Owner.routes";
+import CustomerRoutes from "./Customer.Route";
+import OwnerRoutes from "./Owner.routes";
 
 function IndexRoutes() {
   return (
     <Routes>
+      {/* Route dành cho Admin */}
       {AdminRoutes}
 
-      {/* {CustomerRoutes}
+      {/* Route dành cho Customer */}
+      {CustomerRoutes}
 
-      {OwnerRoutes} */}
+      {/* Route dành cho Owner */}
+      {OwnerRoutes}
 
-      {/* Route không tồn tại */}
-      <Route path="*" element={<Navigate to="/admin" replace />} />
+      {/* Route không tồn tại: chuyển về trang chủ */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

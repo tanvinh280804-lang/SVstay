@@ -16,22 +16,20 @@ export const getAllRoomTypesService = async () => {
 
 export const addNewRoomTypeService = async (roomType) => {
     try {
-        const { type_name, type_slug, description } = roomType;
+        const { type_name, description } = roomType;
 
         const existingRoomType = await RoomType.findOne({
             $or: [
                 { type_name: type_name },
-                { type_slug: type_slug }
             ]
         });
 
         if (existingRoomType) {
-            return { error: "Tên hoặc slug loại phòng đã tồn tại." };
+            return { error: "Tên loại phòng đã tồn tại." };
         }
 
         const newRoomType = await RoomType.create({
             type_name: type_name,
-            type_slug: type_slug,
             description
         });
 
@@ -65,7 +63,7 @@ export const removeRoomTypeService = async (roomTypeId) => {
 
 export const updateRoomTypeService = async (roomTypeId, roomType) => {
     try {
-        const { type_name, type_slug, description } = roomType;
+        const { type_name, type_slug, description, is_active } = roomType;
 
         const existingRoomType = await RoomType.findOne({
             $or: [
@@ -73,20 +71,21 @@ export const updateRoomTypeService = async (roomTypeId, roomType) => {
                 { type_slug }
             ],
             _id: { $ne: roomTypeId }
-
-        })
+        });
 
         if (existingRoomType) {
-            return { error: "Tên loại phòng dã tồn tại." }
+            return { error: "Tên loại phòng dã tồn tại." };
         }
+
+        const updateData = {};
+        if (type_name !== undefined) updateData.type_name = type_name;
+        if (type_slug !== undefined) updateData.type_slug = type_slug;
+        if (description !== undefined) updateData.description = description;
+        if (is_active !== undefined) updateData.is_active = is_active;
 
         const updatedRoomType = await RoomType.findOneAndUpdate(
             { _id: roomTypeId },
-            {
-                type_name,
-                type_slug,
-                description
-            },
+            { $set: updateData },
             {
                 returnDocument: 'after',
                 runValidators: true
@@ -96,11 +95,11 @@ export const updateRoomTypeService = async (roomTypeId, roomType) => {
         return {
             message: "Cập nhật loại phòng thành công.",
             updatedRoomType: updatedRoomType
-        }
+        };
 
     }
     catch (error) {
-        console.log(`Error in removeRoomTypeService: ${error.message}`);
-        return { error: "Lỗi hệ thống khi xóa loại phòng." };
+        console.log(`Error in updateRoomTypeService: ${error.message}`);
+        return { error: "Lỗi hệ thống khi cập nhật loại phòng." };
     }
 }

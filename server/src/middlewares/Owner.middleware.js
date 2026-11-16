@@ -20,6 +20,10 @@ export const OwnerAuthorize = async (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+        if (decoded?.actor && decoded.actor !== "owner") {
+            return res.status(403).json({ message: "Token này không thuộc tài khoản chủ trọ." });
+        }
+
         if (!decoded || !decoded.id) {
             return res.status(401).json({
                 message: "Token xác thực không hợp lệ."
@@ -71,6 +75,9 @@ export const isOwnerActive = async (req, res, next) => {
 
             if (token) {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                if (decoded?.actor && decoded.actor !== "owner") {
+                    return res.status(403).json({ message: "Token này không thuộc tài khoản chủ trọ." });
+                }
                 owner = await Owner.findById(decoded.id).select("-password");
                 if (owner) {
                     req.owner = owner;
@@ -93,19 +100,19 @@ export const isOwnerActive = async (req, res, next) => {
             });
         }
 
-        if (owner.isActive === OWNER_ISACTIVE.BANNED) {
+        if (owner.is_active === OWNER_ISACTIVE.BANNED) {
             return res.status(403).json({
                 message: "Tài khoản Chủ Trọ đã bị khóa vĩnh viễn (Banned)."
             });
         }
 
-        if (owner.isActive === OWNER_ISACTIVE.INACTIVE) {
+        if (owner.is_active === OWNER_ISACTIVE.INACTIVE) {
             return res.status(403).json({
                 message: "Tài khoản Chủ Trọ đang tạm thời bị khóa hoặc chưa kích hoạt."
             });
         }
 
-        if (owner.isActive !== OWNER_ISACTIVE.ACTIVE) {
+        if (owner.is_active !== OWNER_ISACTIVE.ACTIVE) {
             return res.status(403).json({
                 message: "Tài khoản Chủ Trọ đã bị khóa hoặc không hoạt động."
             });

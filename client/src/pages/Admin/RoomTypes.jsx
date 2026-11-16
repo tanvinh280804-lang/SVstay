@@ -128,8 +128,8 @@ export default function RoomTypes() {
         statusFilter === "all"
           ? true
           : statusFilter === "active"
-          ? item.isActive === true
-          : item.isActive === false;
+          ? (item.is_active ?? item.isActive) === true
+          : (item.is_active ?? item.isActive) === false;
 
       return matchSearch && matchStatus;
     });
@@ -293,9 +293,9 @@ export default function RoomTypes() {
                         )}
                       </td>
 
-                      {/* Trạng thái isActive */}
+                      {/* Trạng thái is_active */}
                       <td className="py-3.5 px-4 text-center">
-                        {item.isActive ? (
+                        {(item.is_active ?? item.isActive) ? (
                           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             Hoạt động
