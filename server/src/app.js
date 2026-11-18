@@ -4,9 +4,14 @@ import apiRouter from './routes/index.routes.js';
 
 const app = express();
 
-// CORS
+// CORS - CLIENT_URL có thể chứa nhiều origin, cách nhau bằng dấu phẩy
+const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173,http://localhost:5174')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5174',
+    origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,
 }));

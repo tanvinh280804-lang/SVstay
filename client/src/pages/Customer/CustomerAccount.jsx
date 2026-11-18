@@ -9,5 +9,5 @@ const fields = [
 ];
 
 export default function CustomerAccount() {
-  return <ProfileEditor title="Hồ sơ Customer" description="Thông tin hồ sơ chỉ được chính chủ tài khoản cập nhật." fields={fields} loadProfile={getCustomerProfile} saveProfile={updateCustomerProfile}/>;
+  return <ProfileEditor title="Hồ sơ cá nhân" description="Thông tin hồ sơ chỉ được chính chủ tài khoản cập nhật." fields={fields} loadProfile={getCustomerProfile} saveProfile={updateCustomerProfile}/>;
 }

@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 import OwnerLayout from "../layouts/OwnerLayout";
 import OwnerLogin from "../pages/Auth/OwnerLogin";
 import OwnerDashboard from "../pages/Owner/OwnerDashboard";
@@ -14,7 +14,8 @@ const OwnerRoutes = (
     </Route>
     <Route element={<OwnerPrivateRoute />}>
       <Route path="/owner" element={<OwnerLayout />}>
-        <Route index element={<OwnerDashboard />} />
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<OwnerDashboard />} />
         <Route path="profile" element={<OwnerProfile />} />
         <Route path="rooms" element={<RoomList />} />
         <Route path="rooms/create" element={<RoomForm />} />

@@ -12,13 +12,16 @@ const OwnerLayout = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-slate-50 text-slate-800">
+    <div
+      className="flex min-h-screen bg-[#F5F5F0] text-[#19211D]"
+      style={{ fontFamily: '"Be Vietnam Pro", Inter, system-ui, sans-serif' }}
+    >
       <Sidebar collapsed={collapsed} toggleSidebar={toggleSidebar} />
 
-      <div className="flex-1 flex flex-col min-w-0 min-h-screen">
+      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <Header toggleSidebar={toggleSidebar} />
 
-        <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
           <Outlet />
         </main>
 

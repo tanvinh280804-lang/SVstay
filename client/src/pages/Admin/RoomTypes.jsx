@@ -10,7 +10,6 @@ import {
   SlidersHorizontal,
   Plus,
   X,
-  FileText,
 } from "lucide-react";
 import { toast } from "react-toastify";
 import { getAllRoomTypes, createRoomType } from "../../services/Admin/RoomTypes.service";
@@ -136,16 +135,16 @@ export default function RoomTypes() {
   }, [roomTypes, searchTerm, statusFilter]);
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto w-full max-w-[1240px] space-y-6">
       {/* Tiêu đề trang & Thao tác */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#E2E8E4] shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-[#E7F0EB] text-[#174C3C] flex items-center justify-center shrink-0">
             <Package className="w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-slate-800">Quản lý loại phòng</h1>
-            <p className="text-sm text-slate-500">
+            <h1 className="text-xl font-bold text-[#19211D]">Quản lý loại phòng</h1>
+            <p className="text-sm text-[#707974]">
               Danh sách các loại phòng cho thuê hiện có trên hệ thống.
             </p>
           </div>
@@ -155,7 +154,7 @@ export default function RoomTypes() {
           <button
             onClick={handleRefresh}
             disabled={loading}
-            className="inline-flex items-center justify-center gap-2 px-3.5 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-2 px-3.5 py-2 text-sm font-medium text-[#34443C] bg-[#ECEEE7] hover:bg-[#E2E8E4] rounded-xl transition-colors cursor-pointer disabled:opacity-50"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
             <span>Làm mới</span>
@@ -163,7 +162,7 @@ export default function RoomTypes() {
 
           <button
             onClick={handleOpenAddModal}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-sm shadow-indigo-200 cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[#174C3C] hover:bg-[#0F382C] rounded-xl transition-colors shadow-sm shadow-sm cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Thêm loại phòng</span>
@@ -172,33 +171,33 @@ export default function RoomTypes() {
       </div>
 
       {/* Thanh tìm kiếm và bộ lọc */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row gap-3 items-center justify-between">
+      <div className="bg-white p-4 rounded-2xl border border-[#E2E8E4] shadow-sm flex flex-col md:flex-row gap-3 items-center justify-between">
         {/* Search input */}
         <div className="relative w-full md:w-96">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8A948E]" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Tìm theo tên, slug hoặc mô tả..."
-            className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white transition-all placeholder:text-slate-400 text-slate-800"
+            className="w-full pl-10 pr-4 py-2 text-sm bg-[#F7F7F3] border border-[#E2E8E4] rounded-xl focus:outline-none focus:border-[#174C3C] focus:bg-white transition-all placeholder:text-[#8A948E] text-[#19211D]"
           />
         </div>
 
         {/* Filter status */}
         <div className="flex items-center gap-2 w-full md:w-auto">
-          <SlidersHorizontal className="w-4 h-4 text-slate-400 shrink-0" />
+          <SlidersHorizontal className="w-4 h-4 text-[#8A948E] shrink-0" />
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full md:w-44 px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 text-slate-700 cursor-pointer"
+            className="w-full md:w-44 px-3 py-2 text-sm bg-[#F7F7F3] border border-[#E2E8E4] rounded-xl focus:outline-none focus:border-[#174C3C] text-[#34443C] cursor-pointer"
           >
             <option value="all">Tất cả trạng thái</option>
             <option value="active">Đang hoạt động</option>
             <option value="inactive">Đã tạm dừng</option>
           </select>
 
-          <span className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 whitespace-nowrap">
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-[#E7F0EB] text-[#174C3C] whitespace-nowrap">
             {filteredRoomTypes.length} / {roomTypes.length} loại
           </span>
         </div>
@@ -206,11 +205,11 @@ export default function RoomTypes() {
 
       {/* Trạng thái Đang tải */}
       {loading && (
-        <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 mb-3 animate-spin">
+        <div className="bg-white p-12 rounded-2xl border border-[#E2E8E4] text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#E7F0EB] text-[#174C3C] mb-3 animate-spin">
             <RefreshCw className="w-6 h-6" />
           </div>
-          <p className="text-sm font-medium text-slate-600">
+          <p className="text-sm font-medium text-[#526159]">
             Đang tải danh sách loại phòng...
           </p>
         </div>
@@ -218,17 +217,17 @@ export default function RoomTypes() {
 
       {/* Trạng thái Lỗi */}
       {!loading && error && (
-        <div className="bg-rose-50 border border-rose-200 p-6 rounded-2xl text-rose-800">
+        <div className="bg-[#FFF7ED] border border-[#FED7AA] p-6 rounded-2xl text-[#B45309]">
           <div className="flex items-start gap-3">
-            <AlertCircle className="w-6 h-6 text-rose-600 shrink-0 mt-0.5" />
+            <AlertCircle className="w-6 h-6 text-[#B45309] shrink-0 mt-0.5" />
             <div className="flex-1">
-              <h3 className="font-semibold text-base text-rose-900">
+              <h3 className="font-semibold text-base text-[#7C2D12]">
                 Không thể tải dữ liệu loại phòng
               </h3>
-              <p className="text-sm text-rose-700 mt-1">{error}</p>
+              <p className="text-sm text-[#B45309] mt-1">{error}</p>
               <button
                 onClick={handleRefresh}
-                className="mt-3 px-4 py-1.5 bg-rose-600 text-white text-xs font-semibold rounded-lg hover:bg-rose-700 transition cursor-pointer"
+                className="mt-3 px-4 py-1.5 bg-[#B45309] text-white text-xs font-semibold rounded-lg hover:bg-[#9A3412] transition cursor-pointer"
               >
                 Thử lại
               </button>
@@ -239,12 +238,12 @@ export default function RoomTypes() {
 
       {/* Bảng danh sách loại phòng */}
       {!loading && !error && (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div className="bg-white rounded-2xl border border-[#E2E8E4] shadow-sm overflow-hidden">
           {filteredRoomTypes.length === 0 ? (
-            <div className="p-12 text-center text-slate-400">
-              <Package className="w-12 h-12 mx-auto stroke-1 text-slate-300 mb-2" />
-              <p className="text-sm font-medium text-slate-600">Không tìm thấy loại phòng nào</p>
-              <p className="text-xs text-slate-400 mt-1">
+            <div className="p-12 text-center text-[#8A948E]">
+              <Package className="w-12 h-12 mx-auto stroke-1 text-[#C4CDC7] mb-2" />
+              <p className="text-sm font-medium text-[#526159]">Không tìm thấy loại phòng nào</p>
+              <p className="text-xs text-[#8A948E] mt-1">
                 Thử điều chỉnh từ khóa tìm kiếm hoặc bấm &quot;Thêm loại phòng&quot; để tạo mới.
               </p>
             </div>
@@ -252,7 +251,7 @@ export default function RoomTypes() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-500">
+                  <tr className="bg-[#F7F7F3] border-b border-[#E2E8E4] text-xs font-bold uppercase tracking-wider text-[#707974]">
                     <th className="py-3.5 px-4 w-12 text-center">STT</th>
                     <th className="py-3.5 px-4 min-w-[220px]">Tên loại phòng</th>
                     <th className="py-3.5 px-4 min-w-[180px]">Slug</th>
@@ -260,48 +259,48 @@ export default function RoomTypes() {
                     <th className="py-3.5 px-4 min-w-[130px] text-center">Trạng thái</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-sm">
+                <tbody className="divide-y divide-[#EEF1ED] text-sm">
                   {filteredRoomTypes.map((item, index) => (
                     <tr
                       key={item._id}
-                      className="hover:bg-slate-50/80 transition-colors"
+                      className="hover:bg-[#FAFAF6] transition-colors"
                     >
                       {/* STT */}
-                      <td className="py-3.5 px-4 text-center font-medium text-slate-400">
+                      <td className="py-3.5 px-4 text-center font-medium text-[#8A948E]">
                         {index + 1}
                       </td>
 
                       {/* Tên loại phòng */}
                       <td className="py-3.5 px-4">
-                        <span className="font-semibold text-slate-800">
+                        <span className="font-semibold text-[#19211D]">
                           {item.type_name}
                         </span>
                       </td>
 
                       {/* Slug */}
                       <td className="py-3.5 px-4">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 text-xs font-mono">
-                          <Tag className="w-3 h-3 text-slate-400" />
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#ECEEE7] text-[#526159] text-xs font-mono">
+                          <Tag className="w-3 h-3 text-[#8A948E]" />
                           {item.type_slug}
                         </span>
                       </td>
 
                       {/* Mô tả */}
-                      <td className="py-3.5 px-4 text-slate-600 text-xs sm:text-sm leading-relaxed">
+                      <td className="py-3.5 px-4 text-[#526159] text-xs sm:text-sm leading-relaxed">
                         {item.description || (
-                          <span className="italic text-slate-400">Chưa có mô tả</span>
+                          <span className="italic text-[#8A948E]">Chưa có mô tả</span>
                         )}
                       </td>
 
                       {/* Trạng thái is_active */}
                       <td className="py-3.5 px-4 text-center">
                         {(item.is_active ?? item.isActive) ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#E7F0EB] text-[#174C3C] border border-[#C7DBD0]">
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             Hoạt động
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#ECEEE7] text-[#707974] border border-[#E2E8E4]">
                             <XCircle className="w-3.5 h-3.5" />
                             Tạm dừng
                           </span>
@@ -318,23 +317,23 @@ export default function RoomTypes() {
 
       {/* Modal thêm mới loại phòng */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#19211D]/40 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl border border-[#E2E8E4] shadow-xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-150">
             {/* Header modal */}
-            <div className="flex items-center justify-between p-5 border-b border-slate-100">
+            <div className="flex items-center justify-between p-5 border-b border-[#EEF1ED]">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                <div className="w-9 h-9 rounded-lg bg-[#E7F0EB] text-[#174C3C] flex items-center justify-center">
                   <Plus className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-800">Thêm loại phòng mới</h3>
-                  <p className="text-xs text-slate-500">Tạo mới phân loại phòng cho hệ thống</p>
+                  <h3 className="font-bold text-[#19211D]">Thêm loại phòng mới</h3>
+                  <p className="text-xs text-[#707974]">Tạo mới phân loại phòng cho hệ thống</p>
                 </div>
               </div>
               <button
                 onClick={handleCloseAddModal}
                 disabled={submitting}
-                className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                className="p-1.5 text-[#8A948E] hover:text-[#526159] hover:bg-[#ECEEE7] rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -343,8 +342,8 @@ export default function RoomTypes() {
             {/* Form */}
             <form onSubmit={handleCreateRoomType} className="p-5 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                  Tên loại phòng <span className="text-rose-500">*</span>
+                <label className="block text-xs font-semibold text-[#34443C] uppercase tracking-wider mb-1.5">
+                  Tên loại phòng <span className="text-[#EA580C]">*</span>
                 </label>
                 <input
                   type="text"
@@ -354,13 +353,13 @@ export default function RoomTypes() {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, type_name: e.target.value }))
                   }
-                  className="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-slate-800"
+                  className="w-full px-3.5 py-2.5 text-sm bg-[#F7F7F3] border border-[#E2E8E4] rounded-xl focus:outline-none focus:border-[#174C3C] focus:bg-white transition-all text-[#19211D]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                  Mô tả loại phòng <span className="text-rose-500">*</span>
+                <label className="block text-xs font-semibold text-[#34443C] uppercase tracking-wider mb-1.5">
+                  Mô tả loại phòng <span className="text-[#EA580C]">*</span>
                 </label>
                 <textarea
                   required
@@ -370,35 +369,35 @@ export default function RoomTypes() {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, description: e.target.value }))
                   }
-                  className="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-slate-800 resize-none"
+                  className="w-full px-3.5 py-2.5 text-sm bg-[#F7F7F3] border border-[#E2E8E4] rounded-xl focus:outline-none focus:border-[#174C3C] focus:bg-white transition-all text-[#19211D] resize-none"
                 />
               </div>
 
               {/* Preview slug tự động */}
               {formData.type_name && (
-                <div className="flex items-center gap-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-500">
-                  <Tag className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <div className="flex items-center gap-2 p-2.5 bg-[#F7F7F3] rounded-xl border border-[#E2E8E4] text-xs text-[#707974]">
+                  <Tag className="w-3.5 h-3.5 text-[#8A948E] shrink-0" />
                   <span>Slug dự kiến:</span>
-                  <code className="font-mono text-indigo-600 font-semibold">
+                  <code className="font-mono text-[#174C3C] font-semibold">
                     {formData.type_name.toLowerCase().trim().replace(/\s+/g, "-")}
                   </code>
                 </div>
               )}
 
               {/* Footer hành động */}
-              <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-[#EEF1ED]">
                 <button
                   type="button"
                   onClick={handleCloseAddModal}
                   disabled={submitting}
-                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                  className="px-4 py-2 text-sm font-medium text-[#526159] hover:bg-[#ECEEE7] rounded-xl transition-colors cursor-pointer"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-colors shadow-sm shadow-indigo-200 cursor-pointer disabled:opacity-50"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2 text-sm font-semibold text-white bg-[#174C3C] hover:bg-[#0F382C] rounded-xl transition-colors shadow-sm shadow-sm cursor-pointer disabled:opacity-50"
                 >
                   {submitting && <RefreshCw className="w-4 h-4 animate-spin" />}
                   <span>{submitting ? "Đang lưu..." : "Lưu loại phòng"}</span>

@@ -36,6 +36,18 @@ const COMMON_AMENITIES = [
   "Không chung chủ",
 ];
 
+const inputClass =
+  "w-full rounded-lg border border-[#DCE4DF] bg-[#F7F7F3] px-4 py-2.5 text-sm text-[#19211D] outline-none transition placeholder:text-[#8A948E] focus:border-[#174C3C] focus:bg-white";
+
+const labelClass =
+  "mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#526159]";
+
+const sectionClass =
+  "space-y-5 rounded-2xl border border-[#E2E8E4] bg-white p-6 shadow-sm";
+
+const sectionTitleClass =
+  "flex items-center gap-2 border-b border-[#EEF1ED] pb-3 text-base font-bold text-[#19211D]";
+
 export default function RoomForm() {
   const { roomId } = useParams();
   const isEdit = Boolean(roomId);
@@ -111,6 +123,7 @@ export default function RoomForm() {
         })
         .finally(() => setFetchingRoom(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- form chỉ tải lại theo roomId
   }, [roomId]);
 
   const handleChange = (e) => {
@@ -239,29 +252,33 @@ export default function RoomForm() {
 
   if (fetchingRoom) {
     return (
-      <div className="py-24 flex flex-col items-center justify-center text-slate-400 gap-3">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      <div className="flex flex-col items-center justify-center gap-3 py-24 text-[#707974]">
+        <Loader2 className="h-8 w-8 animate-spin text-[#174C3C]" />
         <p className="text-sm font-medium">Đang tải thông tin phòng...</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-12">
+    <div className="mx-auto max-w-4xl space-y-6 pb-12">
       {/* Header Form */}
       <div className="flex items-center gap-4">
         <Link
           to="/owner/rooms"
-          className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-300 flex items-center justify-center transition shadow-2xs"
+          className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#DCE4DF] bg-white text-[#526159] shadow-sm transition hover:border-[#174C3C] hover:text-[#174C3C]"
           title="Quay lại danh sách"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="h-5 w-5" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
+          <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#174C3C]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#EA580C]" />
+            SVstay · Chủ trọ
+          </p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-[#14261F]">
             {isEdit ? "Chỉnh sửa phòng trọ" : "Đăng phòng trọ mới"}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+          <p className="mt-1 text-xs text-[#4F5A54] sm:text-sm">
             Điền thông tin chi tiết và tải ảnh để thu hút nhiều sinh viên thuê phòng hơn.
           </p>
         </div>
@@ -269,16 +286,16 @@ export default function RoomForm() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Khối 1: Thông tin cơ bản */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-5">
-          <h2 className="text-base font-bold text-slate-800 flex items-center gap-2 pb-3 border-b border-slate-100">
-            <Building2 className="w-5 h-5 text-blue-600" />
+        <div className={sectionClass}>
+          <h2 className={sectionTitleClass}>
+            <Building2 className="h-5 w-5 text-[#174C3C]" />
             <span>Thông tin cơ bản</span>
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Tên phòng trọ <span className="text-rose-500">*</span>
+              <label className={labelClass}>
+                Tên phòng trọ <span className="text-[#DC2626]">*</span>
               </label>
               <input
                 type="text"
@@ -286,20 +303,20 @@ export default function RoomForm() {
                 value={formData.room_name}
                 onChange={handleChange}
                 placeholder="VD: Phòng khép kín có gác lửng ban công gần ĐH Bách Khoa"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Loại phòng <span className="text-rose-500">*</span>
+              <label className={labelClass}>
+                Loại phòng <span className="text-[#DC2626]">*</span>
               </label>
               <select
                 name="room_type_id"
                 value={formData.room_type_id}
                 onChange={handleChange}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800 bg-white cursor-pointer"
+                className={`${inputClass} cursor-pointer`}
                 required
               >
                 <option value="">-- Chọn loại phòng --</option>
@@ -312,8 +329,8 @@ export default function RoomForm() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Diện tích (m²) <span className="text-rose-500">*</span>
+              <label className={labelClass}>
+                Diện tích (m²) <span className="text-[#DC2626]">*</span>
               </label>
               <input
                 type="number"
@@ -322,15 +339,13 @@ export default function RoomForm() {
                 onChange={handleChange}
                 placeholder="VD: 25"
                 min="1"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Số người ở tối đa
-              </label>
+              <label className={labelClass}>Số người ở tối đa</label>
               <input
                 type="number"
                 name="max_occupants"
@@ -338,23 +353,23 @@ export default function RoomForm() {
                 onChange={handleChange}
                 placeholder="VD: 2"
                 min="1"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
               />
             </div>
           </div>
         </div>
 
         {/* Khối 2: Chi phí & Giá thuê */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-5">
-          <h2 className="text-base font-bold text-slate-800 flex items-center gap-2 pb-3 border-b border-slate-100">
-            <DollarSign className="w-5 h-5 text-emerald-600" />
+        <div className={sectionClass}>
+          <h2 className={sectionTitleClass}>
+            <DollarSign className="h-5 w-5 text-[#EA580C]" />
             <span>Chi phí & Giá thuê</span>
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Giá thuê (đ/tháng) <span className="text-rose-500">*</span>
+              <label className={labelClass}>
+                Giá thuê (đ/tháng) <span className="text-[#DC2626]">*</span>
               </label>
               <input
                 type="number"
@@ -364,15 +379,13 @@ export default function RoomForm() {
                 placeholder="VD: 3000000"
                 min="0"
                 step="50000"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Tiền đặt cọc (đ)
-              </label>
+              <label className={labelClass}>Tiền đặt cọc (đ)</label>
               <input
                 type="number"
                 name="deposit"
@@ -380,14 +393,12 @@ export default function RoomForm() {
                 onChange={handleChange}
                 placeholder="VD: 3000000"
                 min="0"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Tiền điện (đ/kWh)
-              </label>
+              <label className={labelClass}>Tiền điện (đ/kWh)</label>
               <input
                 type="number"
                 name="electricity_price"
@@ -395,14 +406,12 @@ export default function RoomForm() {
                 onChange={handleChange}
                 placeholder="VD: 3500"
                 min="0"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Tiền nước (đ/tháng hoặc m³)
-              </label>
+              <label className={labelClass}>Tiền nước (đ/tháng hoặc m³)</label>
               <input
                 type="number"
                 name="water_price"
@@ -410,23 +419,23 @@ export default function RoomForm() {
                 onChange={handleChange}
                 placeholder="VD: 100000"
                 min="0"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
               />
             </div>
           </div>
         </div>
 
         {/* Khối 3: Vị trí & Địa chỉ */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-5">
-          <h2 className="text-base font-bold text-slate-800 flex items-center gap-2 pb-3 border-b border-slate-100">
-            <MapPin className="w-5 h-5 text-rose-600" />
+        <div className={sectionClass}>
+          <h2 className={sectionTitleClass}>
+            <MapPin className="h-5 w-5 text-[#174C3C]" />
             <span>Địa chỉ phòng trọ</span>
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Tỉnh / Thành phố <span className="text-rose-500">*</span>
+              <label className={labelClass}>
+                Tỉnh / Thành phố <span className="text-[#DC2626]">*</span>
               </label>
               <input
                 type="text"
@@ -434,14 +443,14 @@ export default function RoomForm() {
                 value={formData.province}
                 onChange={handleChange}
                 placeholder="VD: TP. Hồ Chí Minh hoặc Hà Nội"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Quận / Huyện <span className="text-rose-500">*</span>
+              <label className={labelClass}>
+                Quận / Huyện <span className="text-[#DC2626]">*</span>
               </label>
               <input
                 type="text"
@@ -449,28 +458,26 @@ export default function RoomForm() {
                 value={formData.district}
                 onChange={handleChange}
                 placeholder="VD: Quận Cầu Giấy hoặc Thủ Đức"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Phường / Xã
-              </label>
+              <label className={labelClass}>Phường / Xã</label>
               <input
                 type="text"
                 name="ward"
                 value={formData.ward}
                 onChange={handleChange}
                 placeholder="VD: Phường Dịch Vọng Hậu"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
               />
             </div>
 
             <div className="sm:col-span-3">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-                Địa chỉ cụ thể (Số nhà, tên đường, ngõ) <span className="text-rose-500">*</span>
+              <label className={labelClass}>
+                Địa chỉ cụ thể (Số nhà, tên đường, ngõ) <span className="text-[#DC2626]">*</span>
               </label>
               <input
                 type="text"
@@ -478,7 +485,7 @@ export default function RoomForm() {
                 value={formData.specific_address}
                 onChange={handleChange}
                 placeholder="VD: Số 12 ngõ 45 phố Trần Thái Tông"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800"
+                className={inputClass}
                 required
               />
             </div>
@@ -486,17 +493,15 @@ export default function RoomForm() {
         </div>
 
         {/* Khối 4: Tiện ích & Mô tả */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-5">
-          <h2 className="text-base font-bold text-slate-800 flex items-center gap-2 pb-3 border-b border-slate-100">
-            <Check className="w-5 h-5 text-indigo-600" />
+        <div className={sectionClass}>
+          <h2 className={sectionTitleClass}>
+            <Check className="h-5 w-5 text-[#174C3C]" />
             <span>Tiện ích & Mô tả</span>
           </h2>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
-              Các tiện ích sẵn có (Chọn nhiều)
-            </label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
+            <label className={`${labelClass} mb-2`}>Các tiện ích sẵn có (Chọn nhiều)</label>
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-5">
               {COMMON_AMENITIES.map((amenity) => {
                 const checked = formData.amenities.includes(amenity);
                 return (
@@ -504,14 +509,14 @@ export default function RoomForm() {
                     key={amenity}
                     type="button"
                     onClick={() => handleAmenityToggle(amenity)}
-                    className={`px-3 py-2 rounded-xl text-xs font-semibold text-left transition border flex items-center justify-between cursor-pointer ${
+                    className={`flex cursor-pointer items-center justify-between gap-1 rounded-xl border px-3 py-2 text-left text-xs font-semibold transition ${
                       checked
-                        ? "bg-blue-50 border-blue-300 text-blue-700 shadow-2xs"
-                        : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100"
+                        ? "border-[#174C3C] bg-[#ECEEE7] text-[#174C3C]"
+                        : "border-[#DCE4DF] bg-[#FAFAF6] text-[#526159] hover:bg-[#F7F7F3]"
                     }`}
                   >
                     <span className="truncate">{amenity}</span>
-                    {checked && <Check className="w-3.5 h-3.5 text-blue-600 shrink-0 ml-1" />}
+                    {checked && <Check className="ml-1 h-3.5 w-3.5 shrink-0 text-[#174C3C]" />}
                   </button>
                 );
               })}
@@ -519,29 +524,27 @@ export default function RoomForm() {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-              Mô tả chi tiết phòng trọ
-            </label>
+            <label className={labelClass}>Mô tả chi tiết phòng trọ</label>
             <textarea
               name="description"
               rows={5}
               value={formData.description}
               onChange={handleChange}
               placeholder="Mô tả về không gian, giờ giấc, an ninh, khoảng cách tới các trường đại học lân cận, tiện ích xung quanh..."
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-800 resize-y"
+              className={`${inputClass} resize-y py-3`}
             />
           </div>
         </div>
 
         {/* Khối 5: Tải lên hình ảnh */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-5">
-          <h2 className="text-base font-bold text-slate-800 flex items-center gap-2 pb-3 border-b border-slate-100">
-            <UploadCloud className="w-5 h-5 text-blue-600" />
+        <div className={sectionClass}>
+          <h2 className={sectionTitleClass}>
+            <UploadCloud className="h-5 w-5 text-[#174C3C]" />
             <span>Hình ảnh thực tế của phòng (Tối đa 10 ảnh)</span>
           </h2>
 
           {/* Vùng chọn ảnh */}
-          <div className="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-2xl p-6 text-center transition-colors">
+          <div className="rounded-2xl border-2 border-dashed border-[#C7DBD0] p-6 text-center transition-colors hover:border-[#174C3C]">
             <input
               type="file"
               id="file-upload"
@@ -550,17 +553,14 @@ export default function RoomForm() {
               onChange={handleFileChange}
               className="hidden"
             />
-            <label
-              htmlFor="file-upload"
-              className="cursor-pointer flex flex-col items-center justify-center gap-2"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                <UploadCloud className="w-6 h-6" />
+            <label htmlFor="file-upload" className="flex cursor-pointer flex-col items-center justify-center gap-2">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#ECEEE7] text-[#174C3C]">
+                <UploadCloud className="h-6 w-6" />
               </div>
-              <p className="text-sm font-semibold text-slate-700">
+              <p className="text-sm font-semibold text-[#19211D]">
                 Nhấp vào đây để chọn ảnh từ máy tính
               </p>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-[#9A3412]">
                 Định dạng JPG, PNG, WEBP. Ảnh sắc nét giúp phòng được thuê nhanh hơn 80%!
               </p>
             </label>
@@ -569,24 +569,24 @@ export default function RoomForm() {
           {/* Xem trước ảnh đã chọn hoặc ảnh cũ */}
           {(existingImages.length > 0 || previewUrls.length > 0) && (
             <div className="space-y-3 pt-2">
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#526159]">
                 Ảnh đã tải lên ({existingImages.length + previewUrls.length}/10)
               </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:grid-cols-5">
                 {/* Ảnh cũ (khi sửa) */}
                 {existingImages.map((url, idx) => (
-                  <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-slate-200 group">
-                    <img src={url} alt="Room" className="w-full h-full object-cover" />
+                  <div key={idx} className="group relative aspect-square overflow-hidden rounded-xl border border-[#DCE4DF]">
+                    <img src={url} alt="Room" className="h-full w-full object-cover" />
                     <button
                       type="button"
                       onClick={() => removeExistingImage(url)}
-                      className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-slate-900/80 text-white flex items-center justify-center hover:bg-rose-600 transition"
+                      className="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-[#0F382C]/85 text-white transition hover:bg-[#DC2626]"
                       title="Xóa ảnh này"
                     >
-                      <X className="w-3.5 h-3.5" />
+                      <X className="h-3.5 w-3.5" />
                     </button>
-                    <span className="absolute bottom-1 left-1 text-[10px] bg-slate-900/70 text-white px-1.5 py-0.5 rounded">
+                    <span className="absolute bottom-1 left-1 rounded bg-[#174C3C] px-1.5 py-0.5 text-[10px] font-semibold text-white">
                       Đã lưu
                     </span>
                   </div>
@@ -594,17 +594,17 @@ export default function RoomForm() {
 
                 {/* Ảnh mới chọn */}
                 {previewUrls.map((url, idx) => (
-                  <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-blue-200 group">
-                    <img src={url} alt="Preview" className="w-full h-full object-cover" />
+                  <div key={idx} className="group relative aspect-square overflow-hidden rounded-xl border border-[#FED7AA]">
+                    <img src={url} alt="Preview" className="h-full w-full object-cover" />
                     <button
                       type="button"
                       onClick={() => removeSelectedFile(idx)}
-                      className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center hover:bg-rose-700 transition"
+                      className="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-[#DC2626] text-white transition hover:bg-[#B91C1C]"
                       title="Gỡ ảnh"
                     >
-                      <X className="w-3.5 h-3.5" />
+                      <X className="h-3.5 w-3.5" />
                     </button>
-                    <span className="absolute bottom-1 left-1 text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-semibold">
+                    <span className="absolute bottom-1 left-1 rounded bg-[#EA580C] px-1.5 py-0.5 text-[10px] font-semibold text-white">
                       Mới
                     </span>
                   </div>
@@ -618,7 +618,7 @@ export default function RoomForm() {
         <div className="flex items-center justify-end gap-3 pt-4">
           <Link
             to="/owner/rooms"
-            className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 font-semibold text-sm hover:bg-slate-50 transition"
+            className="rounded-xl border border-[#DCE4DF] px-5 py-2.5 text-sm font-semibold text-[#526159] transition hover:bg-[#FAFAF6]"
           >
             Hủy bỏ
           </Link>
@@ -626,11 +626,11 @@ export default function RoomForm() {
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold text-sm shadow-md shadow-blue-500/25 transition flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 rounded-xl bg-[#174C3C] px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#0F382C] disabled:bg-[#8AA79B] disabled:cursor-not-allowed"
           >
             {loading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
                 <span>Đang xử lý dữ liệu...</span>
               </>
             ) : (
